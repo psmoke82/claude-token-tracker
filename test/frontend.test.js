@@ -177,9 +177,15 @@ describe('frontend helpers', () => {
 
     it('has a German string for every English one', () => {
       // A missing key silently renders the English text (or the raw key) in a
-      // German UI — invisible unless someone looks.
+      // non-English UI — invisible unless someone looks.
       const en = Object.keys(G.LANG.en);
       const missing = en.filter(k => !(k in G.LANG.de));
+      expect(missing).toEqual([]);
+    });
+
+    it('has a Korean string for every English one', () => {
+      const en = Object.keys(G.LANG.en);
+      const missing = en.filter(k => !(k in G.LANG.ko));
       expect(missing).toEqual([]);
     });
 
@@ -189,13 +195,23 @@ describe('frontend helpers', () => {
       expect(orphans).toEqual([]);
     });
 
-    it('covers both languages with the same number of keys', () => {
+    it('has no Korean-only orphans left behind by a rename', () => {
+      const ko = Object.keys(G.LANG.ko);
+      const orphans = ko.filter(k => !(k in G.LANG.en));
+      expect(orphans).toEqual([]);
+    });
+
+    it('covers German with the same number of keys as English', () => {
       expect(Object.keys(G.LANG.de).length).toBe(Object.keys(G.LANG.en).length);
+    });
+
+    it('covers Korean with the same number of keys as English', () => {
+      expect(Object.keys(G.LANG.ko).length).toBe(Object.keys(G.LANG.en).length);
     });
 
     it('has no empty translations', () => {
       const empty = [];
-      for (const lang of ['en', 'de']) {
+      for (const lang of ['en', 'de', 'ko']) {
         for (const [k, v] of Object.entries(G.LANG[lang])) {
           if (typeof v === 'string' && v.trim() === '') empty.push(`${lang}:${k}`);
         }

@@ -23,7 +23,7 @@ lib/aggregator.js       in-memory maps, pre-computed on startup
 server.js               node:http, 64 JSON routes + SSE
   │
   ▼
-public/                 vanilla JS, Chart.js, i18n DE/EN
+public/                 vanilla JS, Chart.js, i18n DE/EN/KO
 ```
 
 `lib/watcher.js` (chokidar) re-parses only the appended bytes on change, updates

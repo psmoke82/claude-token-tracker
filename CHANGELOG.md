@@ -4,6 +4,21 @@ Alle nennenswerten Änderungen an diesem Projekt. Format lose nach
 [Keep a Changelog](https://keepachangelog.com/de/1.1.0/); Versionierung nach
 [Semantic Versioning](https://semver.org/lang/de/).
 
+## [Unreleased]
+
+### Added
+
+- **Koreanische Übersetzung (KO)** als dritte Sprache neben Deutsch und
+  Englisch. Alle 2.936 Schlüssel abgedeckt — UI-Texte und Tooltips von Hand,
+  die 1.200 Achievement-Namen von Hand, die 1.200 Achievement-Beschreibungen
+  größtenteils regelbasiert generiert (formelhafte Muster wie „N Sitzungen mit
+  mindestens H Stunden Arbeit“) und der Rest von Hand nachgezogen. Der
+  Sprachschalter in den Einstellungen hat jetzt einen dritten Knopf (`KO`).
+  `scripts/update-badges.js` erkannte die Sprachliste bisher nur über ein
+  hartcodiertes `en|de` — auf beliebig viele zweistellige Sprachcodes
+  umgestellt, damit das `languages`-Badge und `i18n keys x N` nicht bei zwei
+  Sprachen stehen bleiben, sobald eine dritte dazukommt
+
 ## [0.2.1] — 2026-08-30
 
 ### Added

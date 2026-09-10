@@ -425,9 +425,11 @@ describe('achievement catalogue (1200 definitions)', () => {
   const fs = require('fs');
   const path = require('path');
   const i18nSrc = fs.readFileSync(path.join(__dirname, '..', 'public', 'js', 'i18n.js'), 'utf8');
-  // The English block comes first in the file, the German one after it.
+  // The blocks appear in file order: English, Korean, German.
+  const koStart = i18nSrc.indexOf("achievementCat_sessions: '세션'");
   const deStart = i18nSrc.indexOf("achievementCat_sessions: 'Sitzungen'");
-  const EN = i18nSrc.slice(0, deStart);
+  const EN = i18nSrc.slice(0, koStart);
+  const KO = i18nSrc.slice(koStart, deStart);
   const DE = i18nSrc.slice(deStart);
 
   it('has unique keys', () => {
@@ -435,12 +437,12 @@ describe('achievement catalogue (1200 definitions)', () => {
     expect(new Set(keys).size).toBe(keys.length);
   });
 
-  it('gives every achievement a name and description in both languages', () => {
+  it('gives every achievement a name and description in every language', () => {
     // A missing string renders as the raw key in the UI — easy to ship, ugly
     // to discover. 1200 entries make this impossible to eyeball.
     const missing = [];
     for (const a of ACHIEVEMENTS) {
-      for (const [part, lang] of [[EN, 'en'], [DE, 'de']]) {
+      for (const [part, lang] of [[EN, 'en'], [KO, 'ko'], [DE, 'de']]) {
         if (!part.includes(`    ach_${a.key}: `)) missing.push(`${lang}:${a.key}`);
         if (!part.includes(`    ach_${a.key}_desc: `)) missing.push(`${lang}:${a.key}_desc`);
       }

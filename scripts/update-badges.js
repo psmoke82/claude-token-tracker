@@ -100,7 +100,10 @@ function countProject() {
   // Chart.js is loaded from a CDN, so its version lives in the markup.
   const chartJs = (indexHtml.match(/chart\.js@([0-9.]+)/) || [])[1] || '4.x';
 
-  const langs = (i18n.match(/^\s{2}(?:en|de):\s*\{/gm) || []).length || 2;
+  const langCodes = (i18n.match(/^\s{2}([a-z]{2}):\s*\{/gm) || [])
+    .map((m) => m.trim().replace(/:\s*\{$/, ''))
+    .sort();
+  const langs = langCodes.length || 2;
   const testDir = fs.readdirSync(path.join(ROOT, 'test')).filter(f => f.endsWith('.test.js'));
   const docsDir = fs.existsSync(path.join(ROOT, 'docs'))
     ? fs.readdirSync(path.join(ROOT, 'docs')).filter(f => f.endsWith('.md')) : [];
@@ -121,6 +124,7 @@ function countProject() {
     // Two locales x (name + description) per achievement, plus the UI strings.
     i18nKeys: (i18n.match(/^\s{4}[a-zA-Z_][a-zA-Z0-9_]*:/gm) || []).length,
     langs,
+    langCodes,
     deps: Object.keys(pkg.dependencies || {}).length,
     devDeps: Object.keys(pkg.devDependencies || {}).length,
     libModules: fs.readdirSync(path.join(ROOT, 'lib')).filter(f => f.endsWith('.js')).length,
@@ -210,7 +214,7 @@ function badgeBlock({ tests, lines: loc, files, p }) {
       badge('tiers', `${p.tiers} bronze to diamond`, '8957e5', { alt: `${p.tiers} tiers` }),
       badge('models priced', p.models, 'D4A574', { logo: 'anthropic', alt: `${p.models} models in the fallback price table` }),
       badge('i18n keys', `${p.i18nKeys} x ${p.langs}`, 'bf8700', { alt: `${p.i18nKeys} translation keys in ${p.langs} languages` }),
-      badge('languages', 'DE | EN', 'bf8700', { alt: 'German and English' })
+      badge('languages', p.langCodes.map((l) => l.toUpperCase()).join(' | '), 'bf8700', { alt: p.langCodes.map((l) => l.toUpperCase()).join(', ') })
     ),
     '',
     // --- Stack, versions taken from package.json and the markup -------------
