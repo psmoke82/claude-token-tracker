@@ -1,9 +1,11 @@
-> **Fork notice**: This is a personal fork of
-> [pepperonas/claude-token-tracker](https://github.com/pepperonas/claude-token-tracker)
-> that adds a Korean (KO) translation as a third UI language alongside German
-> and English, plus an i18n fix for a hardcoded-German Share API settings
-> section. See the upstream repository for the original project and its
-> documentation.
+> **포크 안내**: 이 저장소는
+> [pepperonas/claude-token-tracker](https://github.com/pepperonas/claude-token-tracker)의
+> 개인 포크입니다. 독일어·영어에 이어 세 번째 UI 언어로 한국어(KO) 번역을 추가했고,
+> 설정 화면의 Share API 섹션에 독일어로 하드코딩되어 있던 부분을 i18n으로 고쳤습니다.
+> **한국어 번역(앱 UI, 업적 이름/설명, 이 문서 포함)은 전부 AI(Claude)로 생성했으며
+> 원어민 검수는 거치지 않았습니다.** 원본 프로젝트와 문서는 upstream 저장소를
+> 참고하세요. 이 문서의 원본(영문)은 [readme_origin.md](readme_origin.md)에 그대로
+> 남겨두었습니다.
 
 <p align="center">
   <img src="public/og-image.png" alt="Claude Token Tracker" width="720">
@@ -12,7 +14,7 @@
 <h1 align="center">Claude Token Tracker</h1>
 
 <p align="center">
-  Real-time dashboard for Claude Code token usage, API-equivalent cost estimation, and coding activity tracking.
+  Claude Code 토큰 사용량, API 환산 비용 추정, 코딩 활동을 추적하는 실시간 대시보드.
 </p>
 
 <!-- BADGES:START -->
@@ -117,6 +119,8 @@
 ---
 
 <p align="center">
+  <a href="readme_origin.md"><img src="https://img.shields.io/badge/%F0%9F%87%AC%F0%9F%87%A7_English-Original-black?style=for-the-badge" alt="English (original)"></a>
+  &nbsp;&nbsp;
   <a href="README_DE.md"><img src="https://img.shields.io/badge/%F0%9F%87%A9%F0%9F%87%AA_Deutsch-Dokumentation-black?style=for-the-badge" alt="Deutsch"></a>
   &nbsp;&nbsp;
   <a href="README_EN.md"><img src="https://img.shields.io/badge/%F0%9F%87%AC%F0%9F%87%A7_English-Documentation-black?style=for-the-badge" alt="English"></a>
@@ -124,7 +128,7 @@
 
 ---
 
-## Quick Start
+## 빠른 시작
 
 ```bash
 git clone https://github.com/pepperonas/claude-token-tracker.git
@@ -133,62 +137,61 @@ npm install
 npm start
 ```
 
-Open [http://localhost:5010](http://localhost:5010)
+[http://localhost:5010](http://localhost:5010) 접속
 
-## Highlights
+## 주요 기능
 
-- **40+ interactive charts** across 10 tabs with real-time SSE updates
-- **Claude API tab** — Anthropic Admin API usage/cost dashboard: budget tracking with progress bar, 4 KPIs (total cost, tokens, avg cost/day, cache efficiency), daily cost/token charts by model, model distribution doughnut, cumulative cost trend. **Per-API-key breakdown**: horizontal stacked bar chart showing cost per key by model, daily cost timeline per key, key comparison table (tokens, input, output, cache %, calculated cost, last used), token history timeline (stacked area). Costs per key calculated via model pricing since the cost API doesn't support `group_by api_key_id`. Key names resolved via `/v1/organizations/api_keys`. AES-256-GCM encrypted key storage, SWR caching with configurable TTL
-- **Usage trends** — four live cards (today / this week / this month / last 7 days) comparing against the previous period **cut off at the same point in time** (yesterday up to this hour, last week up to this weekday+time, last month up to this day-of-month, clamped for shorter months), each with a delta badge, overlay sparkline and month-end projection. Below them five comparison charts on the same payload: 90-day volume with 7d/30d moving averages, cumulative month vs. previous month, week comparison Mon–Sun, project momentum (last 7 days vs. the 7 before) and model-mix shift as 100 % stacked bars. Independent of the period filter, honours the cache and token↔cost toggles
-- **GitHub Integration** — SWR caching, billing with plan detection & percentages, code statistics (LOC by repo), PR Code Impact, Actions Usage by Repository, contribution heatmap
-- **Tool Cost Attribution** — proportional cost/token distribution per tool, MCP server breakdown (auto-detected via `mcp__` prefix), sub-agent tracking (via `/subagents/` path), cost-over-time chart, enhanced table with Type/Cost/Tokens columns
-- **Project Detail Dialog** — click any project in chart or table to open a detail modal with 6 KPIs (tokens, cost, sessions, messages, **active time**, net lines), daily token chart, model distribution doughnut, top tools, sessions list, and JSON export to clipboard. Every KPI carries a one-line explanation and opens a **methodology dialog** ("How these numbers are computed") covering the formulas, the 5-minute idle cap, the price source — and what is *not* counted
-- **Per-project report (HTML + PDF)** — a standalone, print-optimised report per project: KPIs, cost split by component (including the 5-minute and 1-hour cache-write tiers), cost-over-time chart, model and session tables, and a methodology section so the document explains itself. No CDN, no chart library, charts are inline SVG — it survives being mailed around and printed. "PDF" is the browser's own print-to-PDF
-- **Project search & merge** — live substring filter over the Projects table, plus non-destructive merging of projects that are the same codebase (renamed/moved or synced from another device under a different path) into one canonical name, with a 🪄 suggestions button that auto-detects likely duplicates from path names
-- **Rate-Limit Tracking** — automatic detection of Claude Code rate-limit events from JSONL logs, daily aggregation, KPI card, backfill for historical data
-- **Period navigation** — prev/next arrows beside date picker jump by selected period duration
-- **Productivity tab** — Tokens/Min, Lines/Hour, Cost/Line, Cache Savings, Code Ratio with trend indicators
-- **Period comparison** — inline pill selector (Off / Prev. Period / Last 7d / 30d / 90d / Custom) compares two periods side-by-side with 8 metrics, delta %, and color-coded indicators
-- **HTML export** — mobile-responsive interactive snapshot with Chart.js, 8 tabs, 12+ charts, and sortable tables. Optimized for phones (412px+) with adaptive layouts
-- **Global comparison** — compare your stats against the average of all users (multi-user mode)
-- **1200 achievements** — gamification system across 14 categories with 5 tiers, tier-based points, timeline chart, daily unlock stats, and real-time unlock notifications via SSE
-- **Lines of Code tracking** — Write (green), Edit (yellow), Delete (red) with adaptive hourly/daily chart
-- **Usage heatmap** — weekday × hour grid in the overview showing token-usage intensity (rows Mon→Sun for multi-day ranges, a single 24-hour strip for one day), cache-toggle aware with per-cell tooltips
-- **Weekday-aware dates** — chart axis labels and the period-range header show the weekday (e.g. `Sa 06-27`, `Thu 05/28/2026 – Sat 06/27/2026`)
-- **Multi-device tracking** — track usage across multiple machines (MacBook, VPS, Desktop), per-device API keys, device switcher in dashboard, aggregated "All Devices" view, click-to-rename devices, OS-selectable install commands
-- **Multi-user mode** — GitHub OAuth, per-user data isolation, Sync Agent with one-click install (macOS/Linux/Windows)
-- **Token breakdown** — Input, Output, Cache Read, Cache Create with per-type API-equivalent cost estimation. Cache writes are billed by **TTL tier** (5 min = 1.25× input, 1 h = 2× input) — Claude Code writes overwhelmingly to the 1-hour cache, so a flat rate understates cost by ~8.5 %
-- **Share API** — secure external API for sharing project-specific token usage data with clients. Share tokens (48-char hex, 192-bit entropy) expose sanitized project data (tokens, cost, sessions, code lines, daily breakdown) via public endpoints. Admin key authentication for share management, rate limiting (30 req/min/IP), CORS restrictions, and optional expiry. Used by [OPS](https://github.com/pepperonas/celox-ops) for customer transparency dashboards. Settings UI shows Share Admin Key with copy button.
-- **Per-project report (HTML + PDF)** — a standalone, print-optimised report for any project: KPIs, cost split by component including both cache-write tiers, cost over time, model and session tables, and a methodology section so the document explains itself. No CDN and no chart library — charts are inline SVG, so it survives being mailed around and printed. "PDF" is the browser's own print-to-PDF
-- **"How it adds up"** — every KPI carries a one-line explanation and opens a methodology dialog covering the formulas, the 5-minute idle cap, where prices come from, and what is deliberately *not* counted (web search, fast mode, US-only inference, the Batch discount, Bash-driven edits)
-- **Accurate cache pricing** — cache writes are billed by TTL tier: 5 minutes at 1.25x input, **1 hour at 2x**. Claude Code writes overwhelmingly to the 1-hour cache, so a flat rate understates cost by ~8.5%
-- **Database download** — download the full SQLite database from Settings for local backup or analysis
-- **463 automated tests** — unit, integration, and multi-user API tests
-- **Zero-framework frontend** — vanilla JS, 2 runtime dependencies, no build step
+- **40개 이상의 인터랙티브 차트** — 10개 탭, 실시간 SSE 업데이트
+- **Claude API 탭** — Anthropic 관리자 API 사용량/비용 대시보드: 진행률 표시줄이 있는 예산 추적, KPI 4종(총 비용, 토큰, 일평균 비용, 캐시 효율), 모델별 일일 비용/토큰 차트, 모델 분포 도넛, 누적 비용 추이. **API 키별 세부 내역**: 키별·모델별 비용을 보여주는 가로 누적 막대 차트, 키별 일일 비용 타임라인, 키 비교 표(토큰, 입력, 출력, 캐시 %, 계산된 비용, 마지막 사용), 토큰 이력 타임라인(누적 영역). 비용 API가 `group_by api_key_id`를 지원하지 않아 키별 비용은 모델 가격으로 직접 계산합니다. 키 이름은 `/v1/organizations/api_keys`로 조회. AES-256-GCM으로 키 암호화 저장, TTL 설정 가능한 SWR 캐싱
+- **사용량 추이** — 오늘/이번 주/이번 달/최근 7일, 네 개의 실시간 카드가 **같은 시점까지 자른** 직전 기간과 비교(어제 이 시각까지, 지난주 같은 요일·시각까지, 지난달 같은 날짜까지, 짧은 달은 클램프), 각각 변화율 배지·오버레이 스파크라인·월말 예상치 포함. 그 아래 같은 데이터로 만든 비교 차트 5종: 90일 거래량과 7일/30일 이동평균, 이번 달 vs 지난달 누적, 월~일 주간 비교, 프로젝트 모멘텀(최근 7일 vs 이전 7일), 100% 누적 막대로 보는 모델 비중 변화. 기간 필터와 무관하며 캐시/토큰-비용 토글 반영
+- **GitHub 연동** — SWR 캐싱, 요금제 감지 및 비율이 포함된 결제 정보, 코드 통계(저장소별 LOC), PR 코드 영향, 저장소별 Actions 사용량, 기여 히트맵
+- **도구 비용 귀속** — 도구별 비용/토큰 비례 분배, MCP 서버 분류(`mcp__` 접두사로 자동 감지), 서브 에이전트 추적(`/subagents/` 경로 기준), 시간에 따른 비용 차트, 유형/비용/토큰 열이 추가된 표
+- **프로젝트 상세 다이얼로그** — 차트나 표에서 프로젝트를 클릭하면 KPI 6종(토큰, 비용, 세션, 메시지, **활성 시간**, 순 라인)이 담긴 상세 모달, 일별 토큰 차트, 모델 분포 도넛, 주요 도구, 세션 목록, JSON 클립보드 내보내기가 열립니다. 모든 KPI에 한 줄 설명이 붙어있고 클릭하면 공식·5분 유휴 상한선·가격 출처·**집계에서 제외되는 항목**을 설명하는 **산정 방식 다이얼로그**가 열립니다
+- **프로젝트별 리포트 (HTML + PDF)** — 프로젝트별로 독립 실행되는 인쇄 최적화 리포트: KPI, 구성요소별 비용 분할(5분·1시간 캐시 쓰기 등급 포함), 시간에 따른 비용 차트, 모델·세션 표, 문서 자체를 설명하는 산정 방식 섹션. CDN도 차트 라이브러리도 없이 인라인 SVG로 그려서 메일로 주고받거나 인쇄해도 그대로 살아남습니다. "PDF"는 브라우저 자체의 인쇄-PDF 변환 기능
+- **프로젝트 검색 & 병합** — 프로젝트 표에 실시간 부분 문자열 필터, 그리고 이름만 바뀌었거나(이동/다른 기기에서 동기화) 실제로는 같은 코드베이스인 프로젝트를 하나의 정식 이름으로 비파괴적으로 병합. 경로 이름에서 중복 가능성을 자동 감지하는 🪄 추천 버튼 포함
+- **레이트 리밋 추적** — JSONL 로그에서 Claude Code 레이트 리밋 이벤트 자동 감지, 일별 집계, KPI 카드, 과거 데이터 백필
+- **기간 이동** — 날짜 선택기 옆 이전/다음 화살표로 선택한 기간 단위만큼 이동
+- **생산성 탭** — 분당 토큰, 시간당 라인, 라인당 비용, 캐시 절감액, 코드 비율을 추세 표시와 함께
+- **기간 비교** — 인라인 필 선택기(끄기/직전 기간/최근 7일/30일/90일/사용자 지정)로 두 기간을 지표 8종, 변화율 %, 색상 표시와 함께 나란히 비교
+- **HTML 내보내기** — Chart.js 기반 모바일 반응형 인터랙티브 스냅샷, 탭 8개, 차트 12개 이상, 정렬 가능한 표. 412px 이상 폰 화면에 맞춘 적응형 레이아웃
+- **전체 비교** — 모든 사용자 평균과 내 통계를 비교(멀티 유저 모드)
+- **업적 1200개** — 14개 카테고리, 5개 등급의 게임화 시스템. 등급별 포인트, 타임라인 차트, 일별 달성 통계, SSE를 통한 실시간 달성 알림
+- **코드 라인 수 추적** — 작성(초록)·수정(노랑)·삭제(빨강)을 시간/일 단위 적응형 차트로
+- **사용량 히트맵** — 개요 화면의 요일 × 시간 그리드로 토큰 사용 강도 표시(여러 날 범위는 월~일 행, 하루는 24시간 단일 줄), 캐시 토글 반영, 셀별 툴팁
+- **요일 표시 날짜** — 차트 축 라벨과 기간 범위 헤더에 요일 표시(예: `Sa 06-27`, `Thu 05/28/2026 – Sat 06/27/2026`)
+- **다중 기기 추적** — 여러 기기(MacBook, VPS, 데스크톱)의 사용량을 함께 추적, 기기별 API 키, 대시보드 내 기기 전환기, 통합 "전체 기기" 보기, 클릭으로 기기 이름 변경, OS 선택 가능한 설치 명령
+- **멀티 유저 모드** — GitHub OAuth, 사용자별 데이터 격리, 원클릭 설치 지원 Sync Agent(macOS/Linux/Windows)
+- **토큰 내역** — 입력, 출력, 캐시 읽기, 캐시 생성별 API 환산 비용 추정. 캐시 쓰기는 **TTL 등급**별로 과금(5분 = 입력의 1.25배, 1시간 = 입력의 2배) — Claude Code는 대부분 1시간 캐시에 기록하므로, 단일 요율로 계산하면 비용이 약 8.5% 적게 나옵니다
+- **Share API** — 프로젝트별 토큰 사용량을 외부 클라이언트와 안전하게 공유하는 API. 공유 토큰(48자리 16진수, 192비트 엔트로피)이 정제된 프로젝트 데이터(토큰, 비용, 세션, 코드 라인, 일별 내역)를 공개 엔드포인트로 노출. 관리자 키 인증, 레이트 리밋(30회/분/IP), CORS 제한, 선택적 만료 기간. [OPS](https://github.com/pepperonas/celox-ops)가 고객 대상 투명성 대시보드에 사용. 설정 화면에서 복사 버튼과 함께 Share Admin Key 표시
+- **"이렇게 계산됩니다"** — 모든 KPI에 한 줄 설명이 붙고, 클릭하면 공식·5분 유휴 상한선·가격 출처·일부러 **집계에서 뺀** 항목(웹 검색, 고속 모드, 미국 전용 추론, Batch 할인, Bash로 이뤄진 수정)까지 설명하는 산정 방식 다이얼로그가 열립니다
+- **정확한 캐시 가격 산정** — 캐시 쓰기는 TTL 등급별 과금: 5분은 입력의 1.25배, **1시간은 2배**. Claude Code는 대부분 1시간 캐시에 기록하므로 단일 요율로는 비용이 약 8.5% 적게 나옵니다
+- **데이터베이스 다운로드** — 설정에서 전체 SQLite 데이터베이스를 다운로드해 로컬 백업이나 분석에 사용
+- **자동화 테스트 463개** — 단위, 통합, 멀티 유저 API 테스트
+- **프레임워크 없는 프론트엔드** — 바닐라 JS, 런타임 의존성 2개, 빌드 단계 없음
 
-## Screenshots
+## 스크린샷
 
 | | |
 |---|---|
 | ![Overview](public/screenshots/01-overview.png) | ![Usage trends](public/screenshots/02-trends.png) |
-| **Overview** — live sessions, KPI cards, token breakdown, active work time | **Usage trends** — today / week / month / rolling 7d vs. the previous period at the same point, plus the 90-day trend with moving averages |
+| **개요** — 실시간 세션, KPI 카드, 토큰 내역, 활성 작업 시간 | **사용량 추이** — 오늘/이번 주/이번 달/최근 7일을 같은 시점의 직전 기간과 비교, 이동평균이 포함된 90일 추이 |
 | ![Trend charts](public/screenshots/03-trend-charts.png) | ![Sessions](public/screenshots/04-sessions.png) |
-| **Trend comparisons** — cumulative month vs. previous month, week comparison, project momentum, model-mix shift | **Sessions** — sortable table with project, model, duration, active time, tokens, cost |
+| **추이 비교** — 이번 달 vs 지난달 누적, 주간 비교, 프로젝트 모멘텀, 모델 비중 변화 | **세션** — 프로젝트, 모델, 기간, 활성 시간, 토큰, 비용을 정렬 가능한 표로 |
 | ![Projects](public/screenshots/05-projects.png) | ![Tools](public/screenshots/06-tools.png) |
-| **Projects** — per-project tokens and cost, live search, non-destructive merge | **Tools** — tool cost attribution, MCP server breakdown, sub-agent tracking |
+| **프로젝트** — 프로젝트별 토큰과 비용, 실시간 검색, 비파괴적 병합 | **도구** — 도구 비용 귀속, MCP 서버 분류, 서브 에이전트 추적 |
 | ![Models](public/screenshots/07-models.png) | ![Insights](public/screenshots/08-insights.png) |
-| **Models** — model usage over time, per-model tokens and cost | **Insights** — cost breakdown, cumulative cost, weekday activity, cache efficiency |
+| **모델** — 시간에 따른 모델 사용량, 모델별 토큰과 비용 | **인사이트** — 비용 내역, 누적 비용, 요일별 활동, 캐시 효율 |
 | ![Productivity](public/screenshots/09-productivity.png) | ![Achievements](public/screenshots/10-achievements.png) |
-| **Productivity** — efficiency metrics with period comparison | **Achievements** — 1200 achievements across 14 categories, unlocked with historical dates |
+| **생산성** — 기간 비교가 포함된 효율 지표 | **업적** — 14개 카테고리에 걸친 업적 1200개, 달성 날짜와 함께 |
 
-### Mobile (iPhone 16 — 393px)
+### 모바일 (iPhone 16 — 393px)
 
 | | | | | |
 |---|---|---|---|---|
 | ![Overview](public/screenshots/mobile-overview.png) | ![Trends](public/screenshots/mobile-trends.png) | ![Insights](public/screenshots/mobile-insights.png) | ![Productivity](public/screenshots/mobile-productivity.png) | ![Achievements](public/screenshots/mobile-achievements.png) |
-| **Overview** | **Trends** | **Insights** | **Productivity** | **Achievements** |
+| **개요** | **추이** | **인사이트** | **생산성** | **업적** |
 
-## Architecture
+## 아키텍처
 
 ```
 ~/.claude/projects/**/*.jsonl
@@ -199,7 +202,7 @@ Open [http://localhost:5010](http://localhost:5010)
     -> Frontend (Chart.js, vanilla JS, i18n DE/EN/KO)
 ```
 
-**Multi-user mode:**
+**멀티 유저 모드:**
 ```
 Sync Agent (client) -> POST /api/sync (API key auth)
     -> Per-user SQLite storage
@@ -207,67 +210,67 @@ Sync Agent (client) -> POST /api/sync (API key auth)
     -> GitHub OAuth sessions
 ```
 
-**Share API (external integration):**
+**Share API (외부 연동):**
 ```
 OPS -> POST /api/shares (admin key auth) -> project_shares table
 Customer browser -> GET /api/public/share/:token -> sanitized project data
 ```
 
-## Tech Stack
+## 기술 스택
 
-| Layer | Technology |
+| 계층 | 기술 |
 |---|---|
-| **Runtime** | Node.js >= 20.12 (native HTTP server, no Express) |
-| **Database** | SQLite via better-sqlite3 (WAL mode, transactions) |
-| **Frontend** | Vanilla JS + HTML5 + CSS3 (no build step) |
-| **Charts** | Chart.js 4.x |
-| **File watching** | Chokidar 4.x |
-| **Auth** | GitHub OAuth + HttpOnly session cookies |
-| **Encryption** | AES-256-GCM (admin API keys) |
-| **Testing** | Vitest + Supertest |
-| **Linting** | ESLint 9 (flat config) |
+| **런타임** | Node.js >= 20.12 (Express 없이 네이티브 HTTP 서버) |
+| **데이터베이스** | better-sqlite3 기반 SQLite (WAL 모드, 트랜잭션) |
+| **프론트엔드** | 바닐라 JS + HTML5 + CSS3 (빌드 단계 없음) |
+| **차트** | Chart.js 4.x |
+| **파일 감시** | Chokidar 4.x |
+| **인증** | GitHub OAuth + HttpOnly 세션 쿠키 |
+| **암호화** | AES-256-GCM (관리자 API 키) |
+| **테스트** | Vitest + Supertest |
+| **린트** | ESLint 9 (flat config) |
 | **CI** | GitHub Actions |
 
 ## Share API
 
-### Endpoints
+### 엔드포인트
 
-| Endpoint | Auth | Description |
+| 엔드포인트 | 인증 | 설명 |
 |----------|------|-------------|
-| GET /api/share-admin-key | Session | Get admin key + base URL (settings UI) |
-| POST /api/share-admin-key | Session | Regenerate admin key |
-| GET /api/shares | Admin Key / Session | List all shares |
-| POST /api/shares | Admin Key / Session | Create share { project, label, expires_in_days } |
-| DELETE /api/shares/:id | Admin Key / Session | Revoke a share |
-| GET /api/shares/projects | Admin Key / Session | List projects with stats |
-| GET /api/public/share/:token | Public | Get project data (rate limited) |
+| GET /api/share-admin-key | 세션 | 관리자 키 + base URL 조회 (설정 화면) |
+| POST /api/share-admin-key | 세션 | 관리자 키 재발급 |
+| GET /api/shares | 관리자 키 / 세션 | 전체 공유 목록 |
+| POST /api/shares | 관리자 키 / 세션 | 공유 생성 { project, label, expires_in_days } |
+| DELETE /api/shares/:id | 관리자 키 / 세션 | 공유 취소 |
+| GET /api/shares/projects | 관리자 키 / 세션 | 통계 포함 프로젝트 목록 |
+| GET /api/public/share/:token | 공개 | 프로젝트 데이터 조회 (레이트 리밋 적용) |
 
-### Security
+### 보안
 
-- Share tokens: 48-char hex (24 bytes / 192-bit cryptographic randomness)
-- Admin key: 64-char hex, stored in .env, required for management endpoints
-- Rate limiting: 30 requests/minute per IP on public endpoint
-- CORS: restricted to configured origins (ops.celox.io, tracker.celox.io)
-- No internal paths exposed, no project enumeration possible
-- Optional expiry dates on share tokens
+- 공유 토큰: 48자리 16진수 (24바이트 / 192비트 암호학적 난수)
+- 관리자 키: 64자리 16진수, `.env`에 저장, 관리용 엔드포인트에 필요
+- 레이트 리밋: 공개 엔드포인트에 IP당 분당 30회
+- CORS: 지정된 origin으로 제한(ops.celox.io, tracker.celox.io)
+- 내부 경로 노출 없음, 프로젝트 목록 열거 불가
+- 공유 토큰에 선택적 만료일 설정 가능
 
-### Setup
+### 설정
 
 ```bash
-# Add to .env
+# .env에 추가
 SHARE_ADMIN_KEY=your-64-char-hex-key
-# Or generate in Settings -> Share API -> "Neu generieren"
+# 또는 설정 -> Share API -> "재발급"에서 생성
 ```
 
-### Integration with OPS
+### OPS 연동
 
-1. Open Token Tracker -> Settings -> Share API
-2. Copy Tracker URL and Share Admin Key
-3. Add to OPS .env: TOKEN_TRACKER_BASE_URL and TOKEN_TRACKER_ADMIN_KEY
-4. In OPS: Edit customer -> "Projekt verknuepfen" -> select project
-5. Customer detail page shows KI-Nutzung tab with charts, costs, and sessions
+1. Token Tracker 열기 -> 설정 -> Share API
+2. Tracker URL과 Share Admin Key 복사
+3. OPS의 .env에 추가: TOKEN_TRACKER_BASE_URL, TOKEN_TRACKER_ADMIN_KEY
+4. OPS에서: 고객 편집 -> "프로젝트 연결" -> 프로젝트 선택
+5. 고객 상세 페이지에 차트, 비용, 세션이 담긴 AI 사용량 탭 표시
 
-### Public Response Format
+### 공개 응답 형식
 
 ```json
 {
@@ -278,44 +281,44 @@ SHARE_ADMIN_KEY=your-64-char-hex-key
 }
 ```
 
-## Data Continuity & Restore
+## 데이터 연속성 & 복구
 
-`~/.claude/projects` JSONL is only a **rolling window** — Claude Code prunes old
-session files, so the tracker's SQLite DB (`data/tracker.db`) is the long-term
-store of the full history. Continuity across devices and reinstalls:
+`~/.claude/projects`의 JSONL은 **롤링 윈도우**일 뿐입니다 — Claude Code가 오래된
+세션 파일을 정리하므로, 트래커의 SQLite DB(`data/tracker.db`)가 전체 이력을
+보관하는 장기 저장소입니다. 기기 간, 재설치 간 연속성:
 
-- **Hosted (multi-user)**: the sync agent pushes every message to the server;
-  after a machine reset, install the sync agent with a device key from
-  Settings and the same account keeps counting — old history stays intact.
-- **Local backups**: set `BACKUP_PATH` (+ optional `BACKUP_INTERVAL_HOURS`) —
-  atomic `VACUUM INTO` snapshots, auto-pruned to 10 copies.
-- **Full local restore after a reset**: `bash scripts/restore-from-server.sh`
-  pulls a consistent DB snapshot from the hosted server, swaps it in and
-  restarts. Local JSONL is re-parsed on top (deduplicated by message id) and
-  achievements recompute with historical dates automatically.
+- **호스팅(멀티 유저)**: sync agent가 모든 메시지를 서버로 전송합니다. 기기를
+  초기화한 뒤 설정에서 기기 키로 sync agent를 설치하면 같은 계정으로 이어서
+  집계됩니다 — 이전 이력은 그대로 유지됩니다.
+- **로컬 백업**: `BACKUP_PATH`(선택적으로 `BACKUP_INTERVAL_HOURS`)를 설정하면
+  원자적인 `VACUUM INTO` 스냅샷을 남기고 최근 10개만 자동 보관합니다.
+- **초기화 후 전체 로컬 복구**: `bash scripts/restore-from-server.sh`가 호스팅
+  서버에서 일관된 DB 스냅샷을 가져와 교체하고 재시작합니다. 로컬 JSONL은 그
+  위에 다시 파싱되고(메시지 ID로 중복 제거), 업적도 과거 날짜 그대로 자동
+  재계산됩니다.
 
-## Documentation
+## 문서
 
-| Document | Contents |
+| 문서 | 내용 |
 |---|---|
-| [docs/API.md](docs/API.md) | Every route, its authentication and its parameters |
-| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Data flow, modules, and the decisions behind them |
-| [docs/METRICS.md](docs/METRICS.md) | What every number means — and which definitions used to be wrong |
-| [docs/CONFIGURATION.md](docs/CONFIGURATION.md) | Every environment variable, and what is deliberately not configurable |
-| [CONTRIBUTING.md](CONTRIBUTING.md) | Setup, ground rules, and how to add an achievement without shipping an impossible one |
-| [CHANGELOG.md](CHANGELOG.md) | Release history |
-| [README_EN.md](README_EN.md) / [README_DE.md](README_DE.md) | Long-form manual, English and German |
+| [docs/API.md](docs/API.md) | 모든 라우트, 인증 방식, 파라미터 |
+| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | 데이터 흐름, 모듈, 그리고 그 이면의 결정들 |
+| [docs/METRICS.md](docs/METRICS.md) | 모든 숫자가 의미하는 것 — 예전에 틀렸던 정의들 포함 |
+| [docs/CONFIGURATION.md](docs/CONFIGURATION.md) | 모든 환경 변수와, 의도적으로 설정 불가능하게 남겨둔 것 |
+| [CONTRIBUTING.md](CONTRIBUTING.md) | 설치, 기본 규칙, 불가능한 업적을 만들지 않는 법 |
+| [CHANGELOG.md](CHANGELOG.md) | 릴리스 이력 |
+| [README_EN.md](README_EN.md) / [README_DE.md](README_DE.md) | 영문/독문 장문 매뉴얼 |
 
-## Links
+## 링크
 
-- **Try it**: [tracker.celox.io](https://tracker.celox.io)
-- **Author**: [Martin Pfeffer](https://celox.io) | [GitHub](https://github.com/pepperonas)
-- **License**: [MIT](LICENSE)
+- **써보기**: [tracker.celox.io](https://tracker.celox.io)
+- **원저자**: [Martin Pfeffer](https://celox.io) | [GitHub](https://github.com/pepperonas)
+- **라이선스**: [MIT](LICENSE)
 
 ---
 
 <p align="center">
-  <b>If you find this project useful, consider supporting its development:</b>
+  <b>이 프로젝트가 유용하다면 개발 후원을 고려해 주세요:</b>
 </p>
 
 <p align="center">

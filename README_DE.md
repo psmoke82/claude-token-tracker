@@ -2,8 +2,11 @@
 > [pepperonas/claude-token-tracker](https://github.com/pepperonas/claude-token-tracker),
 > der eine koreanische (KO) Übersetzung als dritte UI-Sprache neben Deutsch und
 > Englisch ergänzt, sowie eine i18n-Korrektur für einen fest deutsch
-> verdrahteten Share-API-Einstellungsbereich. Das Original-Projekt samt
-> Dokumentation findet sich im Upstream-Repository.
+> verdrahteten Share-API-Einstellungsbereich. **Die koreanische Übersetzung
+> (App-UI, Achievement-Namen/-Beschreibungen und die koreanische README) wurde
+> vollständig von einer KI (Claude) erstellt und nicht von einem
+> Muttersprachler geprüft.** Das Original-Projekt samt Dokumentation findet
+> sich im Upstream-Repository.
 
 <p align="center">
   <a href="README_EN.md"><img src="https://img.shields.io/badge/%F0%9F%87%AC%F0%9F%87%A7_English-Switch_Language-blue?style=for-the-badge" alt="Switch to English"></a>
