@@ -569,7 +569,8 @@ function navigatePeriod(direction) {
 // --- Period range header (with weekdays) ---
 const _WEEKDAY_SHORT = {
   de: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'],
-  en: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+  en: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+  ko: ['일', '월', '화', '수', '목', '금', '토']
 };
 
 /** "Sa 01.07.2026" (withYear) / "Sa 01.07." — local-time weekday. */
@@ -578,7 +579,7 @@ function formatDateWithWeekday(dateStr, withYear) {
   if (!m) return dateStr || '';
   const [, yyyy, mm, dd] = m;
   const d = new Date(Number(yyyy), Number(mm) - 1, Number(dd));
-  const lang = currentLang === 'de' ? 'de' : 'en';
+  const lang = _WEEKDAY_SHORT[currentLang] ? currentLang : 'en';
   const wd = _WEEKDAY_SHORT[lang][d.getDay()];
   const fmt = (localStorage.getItem('dateFormat') || 'us');
   const date = fmt === 'de'
@@ -748,7 +749,7 @@ function renderHeatmapWeekday(hw) {
     ? (useCache ? (hw.maxCost || 0) : (hw.maxCostNoCache || 0))
     : (useCache ? hw.maxTokens : hw.maxTokensNoCache);
   const order = [1, 2, 3, 4, 5, 6, 0]; // Mon..Sun (data is 0=Sun)
-  const lang = currentLang === 'de' ? 'de' : 'en';
+  const lang = _WEEKDAY_SHORT[currentLang] ? currentLang : 'en';
   const rows = order.map(di => {
     const wd = hw.weekdays.find(w => w.dayIndex === di) || { hours: [] };
     return {
@@ -920,7 +921,7 @@ function _formatResetSeconds(seconds) {
 function _formatResetDate(isoStr) {
   if (!isoStr) return '';
   const d = new Date(isoStr);
-  const lang = currentLang === 'de' ? 'de-DE' : 'en-US';
+  const lang = currentLang === 'de' ? 'de-DE' : currentLang === 'ko' ? 'ko-KR' : 'en-US';
   const day = d.toLocaleDateString(lang, { weekday: 'short' });
   const time = d.toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit' });
   return t('planResetAt').replace('{day}', day).replace('{time}', time);
@@ -928,8 +929,8 @@ function _formatResetDate(isoStr) {
 
 function _formatActiveTime(minutes) {
   if (!minutes || minutes <= 0) return '-';
-  const de = currentLang === 'de';
-  const hUnit = de ? ' Std.' : 'h', mUnit = de ? ' Min.' : 'm';
+  const hUnit = currentLang === 'de' ? ' Std.' : currentLang === 'ko' ? '시간' : 'h';
+  const mUnit = currentLang === 'de' ? ' Min.' : currentLang === 'ko' ? '분' : 'm';
   if (minutes < 60) return minutes + mUnit;
   const h = Math.floor(minutes / 60);
   const m = Math.round(minutes % 60);
@@ -2990,7 +2991,9 @@ async function loadGithub() {
         const [ry, rm, rd] = resetDateStr.split('-');
         const resetFormatted = currentLang === 'de'
           ? `${rd}.${rm}.${ry}`
-          : `${rm}/${rd}/${ry}`;
+          : currentLang === 'ko'
+            ? `${ry}.${rm}.${rd}`
+            : `${rm}/${rd}/${ry}`;
         document.getElementById('gh-billing-reset').textContent = resetFormatted;
       } else {
         document.getElementById('gh-billing-reset').textContent = '-';

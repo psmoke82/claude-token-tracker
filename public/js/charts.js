@@ -5,7 +5,8 @@ let chartDateFormat = localStorage.getItem('dateFormat') || 'us';
 
 const WEEKDAY_SHORT = {
   de: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'],
-  en: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+  en: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+  ko: ['일', '월', '화', '수', '목', '금', '토']
 };
 
 /** Short weekday for a YYYY-MM-DD string, computed in local time. */
@@ -13,7 +14,7 @@ function weekdayShort(dateStr) {
   const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(dateStr || '');
   if (!m) return '';
   const d = new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
-  const lang = (typeof currentLang !== 'undefined' && currentLang === 'de') ? 'de' : 'en';
+  const lang = (typeof currentLang !== 'undefined' && WEEKDAY_SHORT[currentLang]) ? currentLang : 'en';
   return WEEKDAY_SHORT[lang][d.getDay()];
 }
 
@@ -516,7 +517,7 @@ function createTrendWeekCompareChart(canvasId, week, key, mode, todayIdx) {
   if (!week || !week.series) return;
   const fmt = _trendChartFmt(mode);
   const ctx = document.getElementById(canvasId).getContext('2d');
-  const lang = (typeof currentLang !== 'undefined' && currentLang === 'de') ? 'de' : 'en';
+  const lang = (typeof currentLang !== 'undefined' && WEEKDAY_SHORT[currentLang]) ? currentLang : 'en';
   const names = WEEKDAY_SHORT[lang];
   const labels = [1, 2, 3, 4, 5, 6, 0].map(i => names[i]); // Mon..Sun
   const cur = week.series.cur || [], prev = week.series.prev || [];

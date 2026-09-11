@@ -66,6 +66,8 @@ describe('frontend helpers', () => {
     it('localises the weekday', () => {
       F.setLang('de');
       expect(F.weekdayShort('2026-06-27')).toBe('Sa');
+      F.setLang('ko');
+      expect(F.weekdayShort('2026-06-27')).toBe('토');
       F.setLang('en');
     });
 
