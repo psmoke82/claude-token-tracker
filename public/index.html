@@ -1646,21 +1646,21 @@ Unregister-ScheduledTask -TaskName ClaudeSyncAgent -Confirm:$false</code></pre>
 
         <!-- Share API Key (for external integrations like celox ops) -->
         <div class="info-section" id="share-api-key-section">
-          <h3>Share API</h3>
-          <p class="settings-desc">Mit diesem Key können externe Apps (z.B. celox ops) Projekt-Shares erstellen und verwalten. Trage den Key und die Tracker-URL in der externen App ein.</p>
+          <h3 data-i18n="shareApiTitle">Share API</h3>
+          <p class="settings-desc" data-i18n="shareApiDesc">Mit diesem Key können externe Apps (z.B. celox ops) Projekt-Shares erstellen und verwalten. Trage den Key und die Tracker-URL in der externen App ein.</p>
           <div class="api-key-box">
-            <label>Tracker URL</label>
+            <label data-i18n="shareTrackerUrlLabel">Tracker URL</label>
             <div class="api-key-row">
-              <code class="api-key-value" id="share-tracker-url">Wird geladen...</code>
-              <button class="btn-small" id="copy-tracker-url">Kopieren</button>
+              <code class="api-key-value" id="share-tracker-url" data-i18n="shareLoading">Wird geladen...</code>
+              <button class="btn-small" id="copy-tracker-url" data-i18n="copy">Kopieren</button>
             </div>
           </div>
           <div class="api-key-box">
-            <label>Share Admin Key</label>
+            <label data-i18n="shareAdminKeyLabel">Share Admin Key</label>
             <div class="api-key-row">
-              <code class="api-key-value" id="share-admin-key-value">Wird geladen...</code>
-              <button class="btn-small" id="copy-share-admin-key">Kopieren</button>
-              <button class="btn-small btn-danger" id="regenerate-share-admin-key">Neu generieren</button>
+              <code class="api-key-value" id="share-admin-key-value" data-i18n="shareLoading">Wird geladen...</code>
+              <button class="btn-small" id="copy-share-admin-key" data-i18n="copy">Kopieren</button>
+              <button class="btn-small btn-danger" id="regenerate-share-admin-key" data-i18n="regenerate">Neu generieren</button>
             </div>
           </div>
           <div class="settings-status" id="share-admin-key-status"></div>

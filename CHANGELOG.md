@@ -6,6 +6,13 @@ Alle nennenswerten Änderungen an diesem Projekt. Format lose nach
 
 ## [Unreleased]
 
+### Fixed
+
+- **Share-API-Bereich in den Einstellungen war fest deutsch verdrahtet** —
+  Überschrift, Beschreibung, Labels und Statusmeldungen standen wörtlich im
+  HTML/JS statt über `t()` zu laufen, unabhängig von der gewählten Sprache.
+  12 neue Schlüssel (`share*`) in allen drei Sprachen ergänzt
+
 ### Added
 
 - **Koreanische Übersetzung (KO)** als dritte Sprache neben Deutsch und

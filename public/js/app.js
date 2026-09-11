@@ -3494,37 +3494,37 @@ async function loadShareAdminKey() {
 
   try {
     const data = await api('share-admin-key');
-    keyEl.textContent = data.key || 'Nicht konfiguriert — klicke "Neu generieren"';
+    keyEl.textContent = data.key || t('shareNotConfigured');
     urlEl.textContent = data.base_url || window.location.origin;
   } catch {
-    keyEl.textContent = 'Fehler beim Laden';
+    keyEl.textContent = t('shareLoadError');
   }
 
   document.getElementById('copy-share-admin-key').onclick = () => {
     const key = keyEl.textContent;
-    if (!key || key.includes('Nicht konfiguriert') || key.includes('Fehler')) return;
+    if (!key || key === t('shareNotConfigured') || key === t('shareLoadError')) return;
     navigator.clipboard.writeText(key);
-    statusEl.textContent = 'Key kopiert!';
+    statusEl.textContent = t('shareKeyCopied');
     statusEl.className = 'settings-status success';
     setTimeout(() => { statusEl.textContent = ''; }, 2000);
   };
 
   document.getElementById('copy-tracker-url').onclick = () => {
     navigator.clipboard.writeText(urlEl.textContent);
-    statusEl.textContent = 'URL kopiert!';
+    statusEl.textContent = t('shareUrlCopied');
     statusEl.className = 'settings-status success';
     setTimeout(() => { statusEl.textContent = ''; }, 2000);
   };
 
   document.getElementById('regenerate-share-admin-key').onclick = async () => {
-    if (!confirm('Neuen Share Admin Key generieren? Der alte Key wird ungültig.')) return;
+    if (!confirm(t('shareRegenerateConfirm'))) return;
     try {
       const data = await api('share-admin-key', { method: 'POST' });
       keyEl.textContent = data.key;
-      statusEl.textContent = 'Neuer Key generiert. Bitte auch in celox ops aktualisieren.';
+      statusEl.textContent = t('shareNewKeyGenerated');
       statusEl.className = 'settings-status success';
     } catch {
-      statusEl.textContent = 'Fehler beim Generieren';
+      statusEl.textContent = t('shareGenerateError');
       statusEl.className = 'settings-status error';
     }
   };
