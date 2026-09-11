@@ -1,3 +1,10 @@
+> **Fork notice**: This is a personal fork of
+> [pepperonas/claude-token-tracker](https://github.com/pepperonas/claude-token-tracker)
+> that adds a Korean (KO) translation as a third UI language alongside German
+> and English, plus an i18n fix for a hardcoded-German Share API settings
+> section. See the upstream repository for the original project and its
+> documentation.
+
 <p align="center">
   <a href="README_DE.md"><img src="https://img.shields.io/badge/%F0%9F%87%A9%F0%9F%87%AA_Deutsch-Sprache_wechseln-blue?style=for-the-badge" alt="Auf Deutsch wechseln"></a>
 </p>

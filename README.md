@@ -1,3 +1,10 @@
+> **Fork notice**: This is a personal fork of
+> [pepperonas/claude-token-tracker](https://github.com/pepperonas/claude-token-tracker)
+> that adds a Korean (KO) translation as a third UI language alongside German
+> and English, plus an i18n fix for a hardcoded-German Share API settings
+> section. See the upstream repository for the original project and its
+> documentation.
+
 <p align="center">
   <img src="public/og-image.png" alt="Claude Token Tracker" width="720">
 </p>
