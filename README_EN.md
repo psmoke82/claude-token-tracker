@@ -22,7 +22,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/version-v0.2.1-ff6b00?style=for-the-badge&logo=semanticrelease&logoColor=white" alt="Version 0.2.1">
-  <img src="https://img.shields.io/badge/lines_of_code-40.7k-58a6ff?style=for-the-badge&logo=javascript&logoColor=white" alt="40747 lines of code across 58 files">
+  <img src="https://img.shields.io/badge/lines_of_code-40.8k-58a6ff?style=for-the-badge&logo=javascript&logoColor=white" alt="40757 lines of code across 58 files">
 </p>
 
 <p align="center">

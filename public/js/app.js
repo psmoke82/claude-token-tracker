@@ -71,6 +71,15 @@ function toLocalDate(date) {
   return date.getFullYear() + '-' + String(date.getMonth() + 1).padStart(2, '0') + '-' + String(date.getDate()).padStart(2, '0');
 }
 
+/** "2026-09-11 07:35" from an ISO timestamp, in LOCAL time (not the raw UTC string). */
+function formatDateTimeLocal(iso) {
+  if (!iso) return '-';
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return '-';
+  const pad = (n) => String(n).padStart(2, '0');
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+}
+
 function getPeriodRange() {
   const now = new Date();
   const to = toLocalDate(now);
@@ -1263,7 +1272,7 @@ async function loadSessions() {
   }
 
   storeTableData('sessions-tbody', filtered, [
-    { value: s => s.firstTs ? s.firstTs.slice(0, 16).replace('T', ' ') : '-' },
+    { value: s => formatDateTimeLocal(s.firstTs) },
     { value: s => s.project },
     { value: s => s.models.join(', ') },
     { value: s => s.durationMin + 'm', className: 'num' },
