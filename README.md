@@ -1,11 +1,17 @@
 > **포크 안내**: 이 저장소는
 > [pepperonas/claude-token-tracker](https://github.com/pepperonas/claude-token-tracker)의
-> 개인 포크입니다. 독일어·영어에 이어 세 번째 UI 언어로 한국어(KO) 번역을 추가했고,
-> 설정 화면의 Share API 섹션에 독일어로 하드코딩되어 있던 부분을 i18n으로 고쳤습니다.
-> **한국어 번역(앱 UI, 업적 이름/설명, 이 문서 포함)은 전부 AI(Claude)로 생성했으며
-> 원어민 검수는 거치지 않았습니다.** 원본 프로젝트와 문서는 upstream 저장소를
-> 참고하세요. 이 문서의 원본(영문)은 [readme_origin.md](readme_origin.md)에 그대로
-> 남겨두었습니다.
+> 개인 포크입니다. 독일어·영어에 이어 세 번째 UI 언어로 한국어(KO) 번역을 추가했습니다.
+> **한국어 번역(앱 UI, 업적 이름/설명, 이 문서 포함)은 전부 AI(Claude)로 생성했습니다.**
+> 원본 프로젝트와 문서는 upstream 저장소를 참고하세요. 이 문서의 원본(영문)은
+> [readme_origin.md](readme_origin.md)에 그대로 남겨두었습니다.
+>
+> **빠른 설치**
+> ```bash
+> git clone https://github.com/psmoke82/claude-token-tracker
+> cd claude-token-tracker
+> npm install
+> npm start
+> ```
 
 <p align="center">
   <img src="public/og-image.png" alt="Claude Token Tracker" width="720">
